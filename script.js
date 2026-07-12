@@ -147,9 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Show Progress Toast
-        showToast('กำลังบันทึกข้อมูล...', true);
-
         const formData = new FormData(form);
         const data = {
             date: formData.get('date'),
@@ -159,36 +156,55 @@ document.addEventListener('DOMContentLoaded', () => {
             note: formData.get('note') || '-'
         };
 
-        try {
-            const urlParams = new URLSearchParams();
-            for (const key in data) {
-                urlParams.append(key, data[key]);
+        // Confirmation Popup
+        const categoryLabel = data.category;
+        const amountDisplay = formatCurrency(data.amount);
+        
+        Swal.fire({
+            title: 'ยืนยันการบันทึก',
+            html: `คุณกำลังบันทึกข้อมูลไปยังหมวด <b>${categoryLabel}</b><br>จำนวน <b>${amountDisplay}</b> ยืนยันหรือไม่?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'บันทึกข้อมูล',
+            cancelButtonText: 'ยกเลิก',
+            reverseButtons: true
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // Show Progress Toast
+                showToast('กำลังบันทึกข้อมูล...', true);
+
+                try {
+                    const urlParams = new URLSearchParams();
+                    for (const key in data) {
+                        urlParams.append(key, data[key]);
+                    }
+
+                    const response = await fetch(GAS_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: urlParams.toString()
+                    });
+                    
+                    // Show Success Toast
+                    showToast('บันทึกข้อมูลเรียบร้อย', false);
+                    
+                    // Optional: reset form but keep date and category
+                    form.reset();
+                    document.getElementById('date').valueAsDate = new Date();
+
+                    // Refresh dashboard data in background
+                    fetchDashboardData();
+
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('ไม่สามารถบันทึกข้อมูลได้ โปรดลองอีกครั้ง');
+                    document.getElementById('toast').classList.remove('show');
+                }
             }
-
-            const response = await fetch(GAS_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: urlParams.toString()
-            });
-            
-            // Show Success Toast
-            showToast('บันทึกข้อมูลเรียบร้อย', false);
-            
-            // Optional: reset form but keep date and category
-            form.reset();
-            document.getElementById('date').valueAsDate = new Date();
-
-            // Refresh dashboard data in background
-            fetchDashboardData();
-
-        } catch (error) {
-            console.error('Error:', error);
-            alert('ไม่สามารถบันทึกข้อมูลได้ โปรดลองอีกครั้ง');
-            document.getElementById('toast').classList.remove('show');
-        }
+        });
     });
 
     // 4. Line Share Handler

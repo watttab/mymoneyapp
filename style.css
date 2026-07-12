@@ -441,3 +441,31 @@ select {
     font-weight: bold;
     font-size: 18px;
 }
+
+/* Customizing SweetAlert2 Dark Premium mode */
+div:where(.swal2-container) div:where(.swal2-popup) {
+    background: #1a1a1a;
+    color: #fff;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.8);
+}
+div:where(.swal2-container) h2:where(.swal2-title) {
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+div:where(.swal2-container) div:where(.swal2-html-container) {
+    color: #a3a3a3;
+    font-family: 'Inter', sans-serif;
+}
+div:where(.swal2-container) button:where(.swal2-confirm) {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #000;
+    font-weight: bold;
+    border-radius: 10px;
+}
+div:where(.swal2-container) button:where(.swal2-cancel) {
+    background: #333;
+    color: #fff;
+    border-radius: 10px;
+}
