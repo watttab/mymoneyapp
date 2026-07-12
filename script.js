@@ -1,4 +1,4 @@
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxB2Dj4VGRXseKQgcc5boCgpqzmSzN2Ob6FvI8eSuK18KSQnRAVl74ytrZiJXRi70k/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyRj7wJbq8Av8kMYxYa2h3rRYs-QACe9yb8p4rZAXsc7tqUt1U70Ekg1BIGuJsQteA-/exec';
 let myChart = null;
 
 // Helper to format currency
