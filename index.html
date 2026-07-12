@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Money App</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <div class="app-container">
+        <header class="app-header">
+            <h1 class="typewriter-text" id="appTitle"></h1>
+            <p class="subtitle">บันทึกการเงิน & ค่าเทอมลูก</p>
+        </header>
+
+        <div class="card glass">
+            <form id="recordForm">
+                <div class="form-group">
+                    <label for="date">วันที่</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">หมวดหมู่</label>
+                    <div class="custom-select-wrapper">
+                        <select id="category" name="category" required>
+                            <option value="เงินเก็บ">💰 เงินเก็บ</option>
+                            <option value="ค่าเทอมลูก">🎓 ค่าเทอมลูก</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">ประเภทรายการ</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="type" value="income" checked>
+                            <span class="radio-custom income">รายรับ (+)</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="type" value="expense">
+                            <span class="radio-custom expense">รายจ่าย (-)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">จำนวนเงิน (บาท)</label>
+                    <input type="number" id="amount" name="amount" placeholder="0.00" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="note">บันทึกเพิ่มเติม (ตัวเลือก)</label>
+                    <input type="text" id="note" name="note" placeholder="เช่น เงินเดือน, ค่าเทอม กค69">
+                </div>
+
+                <button type="submit" class="btn-primary shimmer-btn">
+                    <span>บันทึกข้อมูล</span>
+                </button>
+            </form>
+        </div>
+
+        <div class="action-buttons">
+            <button id="btnShareLine" class="btn-line">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path d="M22.04 10.15c0-4.36-4.44-7.91-9.9-7.91s-9.9 3.55-9.9 7.91c0 3.94 3.56 7.28 8.35 7.82.32.07.75.22.85.51.1.28.03.7.02.83 0 0-.13.78-.16.98-.04.25-.19.95.84.51s5.55-3.27 7.64-5.65c1.4-1.58 2.26-3.21 2.26-5.01zm-12.83 2.92h-2.12c-.25 0-.46-.21-.46-.46V7.49c0-.25.21-.46.46-.46h2.12c.25 0 .46.21.46.46v4.66c0 .25-.21.46-.46.46zm3.3 0h-2.12c-.25 0-.46-.21-.46-.46V7.49c0-.25.21-.46.46-.46h2.12c.25 0 .46.21.46.46v4.66c0 .25-.21.46-.46.46zm4.61-4.2h-1.66v3.74c0 .25-.21.46-.46.46h-2.12c-.25 0-.46-.21-.46-.46V7.49c0-.25.21-.46.46-.46h4.24c.25 0 .46.21.46.46v.46c0 .25-.21.46-.46.46z"/>
+                </svg>
+                แชร์สรุปไปที่ Line
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
