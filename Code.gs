@@ -34,7 +34,38 @@ function doPost(e) {
 }
 
 function doGet(e) {
-  return ContentService.createTextOutput(JSON.stringify({"status": "ok"}))
+  var ss = SpreadsheetApp.openById("197zNg_0avra8C78Xe8vLiZsjlQVLeDx2j2Si8yJX1GM");
+  
+  // ฟังก์ชันช่วยหาผลรวมของคอลัมน์จำนวนเงิน (คอลัมน์ D)
+  function getTotal(sheetName) {
+    var sheet = ss.getSheetByName(sheetName);
+    if (!sheet) return 0;
+    
+    var lastRow = sheet.getLastRow();
+    if (lastRow <= 1) return 0; // ไม่มีข้อมูล (มีแค่หัวตาราง)
+    
+    var data = sheet.getRange(2, 4, lastRow - 1, 1).getValues();
+    var total = 0;
+    for (var i = 0; i < data.length; i++) {
+      var val = parseFloat(data[i][0]);
+      if (!isNaN(val)) {
+        total += val;
+      }
+    }
+    return total;
+  }
+  
+  var savings = getTotal("เงินเก็บ");
+  var tuition = getTotal("ค่าเทอมลูก");
+  
+  var result = {
+    status: "ok",
+    savings: savings,
+    tuition: tuition,
+    total: savings + tuition
+  };
+  
+  return ContentService.createTextOutput(JSON.stringify(result))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
